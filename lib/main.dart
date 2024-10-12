@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // import 'package:flutter_internals/ui_updates_demo.dart';
-import 'package:flutter_internals/keys/keys.dart';
+import 'package:csc322upgrades2/keys/keys.dart';
 
 void main() {
   var numbers = [1, 2, 3];
