@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:csc322upgrades2/priority.dart';
+import 'priority.dart';
 
 class NewTask extends StatefulWidget {
-  final Function(String, DateTime) addTask;
+  final Function(String, DateTime, Priority) addTask;
 
   NewTask(this.addTask);
 
@@ -14,30 +14,14 @@ class NewTask extends StatefulWidget {
 class _NewTaskState extends State<NewTask> {
   final _titleController = TextEditingController();
   DateTime? _selectedDate;
-  Priority _selectedPriority = Priority.medium; // default priority
+  Priority _selectedPriority = Priority.medium;
 
   void _submitData() {
     if (_titleController.text.isEmpty || _selectedDate == null) {
       return;
     }
-    widget.addTask(_titleController.text, _selectedDate!);
-    Navigator.of(context).pop(); // Close modal
-  }
-
-  void _presentDatePicker() {
-    showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
-    ).then((pickedDate) {
-      if (pickedDate == null) {
-        return;
-      }
-      setState(() {
-        _selectedDate = pickedDate;
-      });
-    });
+    widget.addTask(_titleController.text, _selectedDate!, _selectedPriority);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -64,10 +48,38 @@ class _NewTaskState extends State<NewTask> {
                   ),
                 ),
                 TextButton(
-                  onPressed: _presentDatePicker,
+                  onPressed: () {
+                    showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime(2030),
+                    ).then((pickedDate) {
+                      if (pickedDate == null) {
+                        return;
+                      }
+                      setState(() {
+                        _selectedDate = pickedDate;
+                      });
+                    });
+                  },
                   child: const Text('Choose Date'),
                 ),
               ],
+            ),
+            DropdownButton<Priority>(
+              value: _selectedPriority,
+              items: Priority.values.map((Priority priority) {
+                return DropdownMenuItem<Priority>(
+                  value: priority,
+                  child: Text(priority.name.toUpperCase()),
+                );
+              }).toList(),
+              onChanged: (Priority? newValue) {
+                setState(() {
+                  _selectedPriority = newValue!;
+                });
+              },
             ),
             ElevatedButton(
               onPressed: _submitData,
