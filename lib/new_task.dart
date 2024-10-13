@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:csc322upgrades2/priority.dart';
 
 class NewTask extends StatefulWidget {
   final Function(String, DateTime) addTask;
@@ -13,6 +14,7 @@ class NewTask extends StatefulWidget {
 class _NewTaskState extends State<NewTask> {
   final _titleController = TextEditingController();
   DateTime? _selectedDate;
+  Priority _selectedPriority = Priority.medium; // default priority
 
   void _submitData() {
     if (_titleController.text.isEmpty || _selectedDate == null) {

@@ -1,0 +1,1 @@
+ /Users/gracebergquist/flutter_projects/csc322upgrades2/.dart_tool/flutter_build/8b29e7a6c2a93962702979aaea12754c/native_assets.yaml: 
