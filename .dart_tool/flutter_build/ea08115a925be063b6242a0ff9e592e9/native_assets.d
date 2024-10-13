@@ -1,0 +1,1 @@
+ /Users/mckaylaguzman/Desktop/Files/FA24/Mobile\ app/CSC322_Upgrades2/.dart_tool/flutter_build/ea08115a925be063b6242a0ff9e592e9/native_assets.yaml: 
