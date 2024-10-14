@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:csc322upgrades2/task_model.dart';
@@ -27,7 +28,7 @@ class _TaskPageState extends State<TaskPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? tasksData = prefs.getString('tasks');
     String? archivedData = prefs.getString('archivedTasks');
-    
+
     if (tasksData != null) {
       List<dynamic> taskList = json.decode(tasksData);
       setState(() {
@@ -44,8 +45,10 @@ class _TaskPageState extends State<TaskPage> {
 
   void _saveTasks() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<Map<String, dynamic>> taskList = tasks.map((task) => task.toMap()).toList();
-    List<Map<String, dynamic>> archivedList = archivedTasks.map((task) => task.toMap()).toList();
+    List<Map<String, dynamic>> taskList =
+        tasks.map((task) => task.toMap()).toList();
+    List<Map<String, dynamic>> archivedList =
+        archivedTasks.map((task) => task.toMap()).toList();
     prefs.setString('tasks', json.encode(taskList));
     prefs.setString('archivedTasks', json.encode(archivedList));
   }
@@ -111,7 +114,8 @@ class _TaskPageState extends State<TaskPage> {
       ),
       body: taskList.isEmpty
           ? Center(
-              child: Text(showArchived ? 'No archived tasks.' : 'No tasks added yet.'),
+              child: Text(
+                  showArchived ? 'No archived tasks.' : 'No tasks added yet.'),
             )
           : ListView.builder(
               itemCount: taskList.length,
@@ -139,7 +143,9 @@ class _TaskPageState extends State<TaskPage> {
                           : TextDecoration.none,
                     ),
                   ),
-                  subtitle: Text('${taskList[index].date} | Priority: ${taskList[index].priority.name.toUpperCase()}'),
+                  subtitle: Text(
+                    '${DateFormat.yMMMd().format(taskList[index].date)} | Priority: ${taskList[index].priority.name.toUpperCase()}',
+                  ),
                   trailing: showArchived
                       ? IconButton(
                           icon: const Icon(Icons.restore),
